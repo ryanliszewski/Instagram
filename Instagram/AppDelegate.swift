@@ -7,15 +7,42 @@
 //
 
 import UIKit
+import Parse
 
 @UIApplicationMain
 class AppDelegate: UIResponder, UIApplicationDelegate {
 
     var window: UIWindow?
-
+    var storyboard = UIStoryboard(name: "Main", bundle: nil)
 
     func application(_ application: UIApplication, didFinishLaunchingWithOptions launchOptions: [UIApplicationLaunchOptionsKey: Any]?) -> Bool {
         // Override point for customization after application launch.
+        
+        Parse.initialize(
+            with: ParseClientConfiguration(block: { (configuration:ParseMutableClientConfiguration) -> Void in
+                configuration.applicationId = "Instagram"
+                configuration.clientKey = "dpoasjflknasklfnaksldnflkd4324234hu42fsdn32"
+                configuration.server = "https://shielded-bastion-44951.herokuapp.com/parse"
+            })
+        )
+        
+        //User login persistence
+        if(PFUser.current() != nil){
+            self.window = UIWindow(frame: UIScreen.main.bounds)
+            let homeViewController = storyboard.instantiateViewController(withIdentifier: "HomeViewController") as? UITabBarController
+            window?.rootViewController = homeViewController
+            window?.makeKeyAndVisible()
+        }
+        
+        //Logout Closure
+        NotificationCenter.default.addObserver(forName: NSNotification.Name(rawValue:"User did Logout"), object: nil, queue: OperationQueue.main) { (Notification) in
+            
+            let viewController = self.storyboard.instantiateInitialViewController()
+            self.window?.rootViewController = viewController
+            self.window?.makeKeyAndVisible()
+        }
+
+        
         return true
     }
 
