@@ -10,13 +10,14 @@ import UIKit
 import Parse
 
 @UIApplicationMain
-class AppDelegate: UIResponder, UIApplicationDelegate {
+class AppDelegate: UIResponder, UIApplicationDelegate, UITabBarControllerDelegate {
 
     var window: UIWindow?
     var storyboard = UIStoryboard(name: "Main", bundle: nil)
 
     func application(_ application: UIApplication, didFinishLaunchingWithOptions launchOptions: [UIApplicationLaunchOptionsKey: Any]?) -> Bool {
         // Override point for customization after application launch.
+        self.window = UIWindow(frame: UIScreen.main.bounds)
         
         Parse.initialize(
             with: ParseClientConfiguration(block: { (configuration:ParseMutableClientConfiguration) -> Void in
@@ -29,9 +30,11 @@ class AppDelegate: UIResponder, UIApplicationDelegate {
         //User login persistence
         if(PFUser.current() != nil){
             self.window = UIWindow(frame: UIScreen.main.bounds)
-            let homeViewController = storyboard.instantiateViewController(withIdentifier: "HomeViewController") as? UITabBarController
-            window?.rootViewController = homeViewController
-            window?.makeKeyAndVisible()
+            setUpTabBar()
+        } else {
+            let viewController = self.storyboard.instantiateInitialViewController()
+            self.window?.rootViewController = viewController
+            self.window?.makeKeyAndVisible()
         }
         
         //Logout Closure
@@ -44,6 +47,26 @@ class AppDelegate: UIResponder, UIApplicationDelegate {
 
         
         return true
+    }
+    
+    func setUpTabBar(){
+        let homeViewController = storyboard.instantiateViewController(withIdentifier: "HomeViewController") as! UINavigationController
+        
+        homeViewController.modalPresentationStyle = UIModalPresentationStyle.overCurrentContext
+        
+        let postViewController = storyboard.instantiateViewController(withIdentifier: "PostViewController") as! UINavigationController
+        
+        homeViewController.tabBarItem.title = "Home"
+        
+        postViewController.tabBarController?.title = "Post"
+        
+        
+        let tabBarController = UITabBarController()
+        
+        tabBarController.viewControllers = [homeViewController, postViewController]
+        self.window?.rootViewController = tabBarController
+        self.window?.makeKeyAndVisible()
+        
     }
 
     func applicationWillResignActive(_ application: UIApplication) {
@@ -66,6 +89,18 @@ class AppDelegate: UIResponder, UIApplicationDelegate {
 
     func applicationWillTerminate(_ application: UIApplication) {
         // Called when the application is about to terminate. Save data if appropriate. See also applicationDidEnterBackground:.
+    }
+    
+    func tabBarController(_ tabBarController: UITabBarController, shouldSelect viewController: UIViewController) -> Bool {
+        
+        if(viewController.title == "Post") {
+            tabBarController.present(viewController, animated: true) {
+                UIView.animate(withDuration: 5, animations: {
+                })
+            }
+        }
+        
+        return true
     }
 
 
