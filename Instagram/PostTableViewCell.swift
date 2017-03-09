@@ -13,18 +13,38 @@ import ParseUI
 
 class PostTableViewCell: UITableViewCell {
 
+    @IBOutlet weak var usernameHeaderLabel: UILabel!
     @IBOutlet weak var captionLabel: UILabel!
     @IBOutlet weak var postPFImageView: PFImageView!
+    @IBOutlet weak var usernameFooterLabel: UILabel!
+    @IBOutlet weak var timeStampLabel: UILabel!
     
     var post: PFObject! {
         didSet {
-            print("test")
-            print(post)
             self.postPFImageView.file = post["media"] as? PFFile
             self.postPFImageView.loadInBackground()
+            
+            self.captionLabel.text = post["caption"] as? String
+       
+            let dateFormat = DateFormatter()
+            dateFormat.dateFormat = "EEE, MMM d, h:mm a"
+            let time = post.createdAt! as Date
+            timeStampLabel.text = String(format: "%@", dateFormat.string(from: (time)))
+            
+            let user = post["author"] as? PFObject
+           
+            user?.fetchInBackground(block: { (user: PFObject?, error: Error?) in
+                let username = user?["username"] as? String
+                
+                self.usernameFooterLabel.text = username
+                self.usernameHeaderLabel.text = username
+            
+            })
+            
+            
         }
     }
-    
+
     override func awakeFromNib() {
         super.awakeFromNib()
         // Initialization code
@@ -35,5 +55,7 @@ class PostTableViewCell: UITableViewCell {
 
         // Configure the view for the selected state
     }
+    
 
+    
 }
