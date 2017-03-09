@@ -31,7 +31,7 @@ class HomeViewController: UIViewController, UITableViewDelegate, UITableViewData
     
     override  func viewDidAppear(_ animated: Bool){
 
-        
+
     }
 
     override func didReceiveMemoryWarning() {
@@ -52,10 +52,6 @@ class HomeViewController: UIViewController, UITableViewDelegate, UITableViewData
                 print(error?.localizedDescription)
             }
         }
-    
-        
-        
-        
     }
     
     func updateTableView(){
@@ -80,7 +76,7 @@ class HomeViewController: UIViewController, UITableViewDelegate, UITableViewData
         let cell = tableView.dequeueReusableCell(withIdentifier: "PostCell") as! PostTableViewCell
         
         print(posts.count)
-        cell.post = posts[indexPath.row]
+        cell.post = posts[(posts.count - 1) - indexPath.row]
         
         return cell
     }

@@ -7,6 +7,7 @@
 //
 
 import UIKit
+import MBProgressHUD
 
 class PostViewController: UIViewController,UIImagePickerControllerDelegate, UINavigationControllerDelegate, UITextFieldDelegate {
 
@@ -54,9 +55,13 @@ class PostViewController: UIViewController,UIImagePickerControllerDelegate, UINa
     
     
     @IBAction func onPostButtonTapped(_ sender: Any) {
+        MBProgressHUD.showAdded(to: self.view, animated: true)
+        
+        
         Post.postUserImage(image: editedImage, withCaption: captionTextField.text) { (success: Bool, error: Error? ) in
             if(success){
                 print("posted a picture")
+                MBProgressHUD.hide(for: self.view, animated: true)
                 
             }else {
                 print(error?.localizedDescription)

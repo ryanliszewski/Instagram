@@ -40,8 +40,6 @@ class PostTableViewCell: UITableViewCell {
                 self.usernameHeaderLabel.text = username
             
             })
-            
-            
         }
     }
 

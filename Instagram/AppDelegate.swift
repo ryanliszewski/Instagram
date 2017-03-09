@@ -52,18 +52,28 @@ class AppDelegate: UIResponder, UIApplicationDelegate, UITabBarControllerDelegat
     func setUpTabBar(){
         let homeViewController = storyboard.instantiateViewController(withIdentifier: "HomeViewController") as! UINavigationController
         
-        homeViewController.modalPresentationStyle = UIModalPresentationStyle.overCurrentContext
+                
+        let postViewController = storyboard.instantiateViewController(withIdentifier: "PostViewController")
+            as! UINavigationController
         
-        let postViewController = storyboard.instantiateViewController(withIdentifier: "PostViewController") as! UINavigationController
+        
+        let profileViewController = storyboard.instantiateViewController(withIdentifier: "ProfileViewController") as! UINavigationController
+        
+        
+        postViewController.modalPresentationStyle = UIModalPresentationStyle.overCurrentContext
         
         homeViewController.tabBarItem.title = "Home"
         
-        postViewController.tabBarController?.title = "Post"
+        postViewController.tabBarItem.title = "Post"
+        
+        profileViewController.tabBarItem.title = "profile"
+        
+        //profileViewController.ta
         
         
         let tabBarController = UITabBarController()
         
-        tabBarController.viewControllers = [homeViewController, postViewController]
+        tabBarController.viewControllers = [homeViewController, postViewController, profileViewController]
         self.window?.rootViewController = tabBarController
         self.window?.makeKeyAndVisible()
         
@@ -91,17 +101,17 @@ class AppDelegate: UIResponder, UIApplicationDelegate, UITabBarControllerDelegat
         // Called when the application is about to terminate. Save data if appropriate. See also applicationDidEnterBackground:.
     }
     
-    func tabBarController(_ tabBarController: UITabBarController, shouldSelect viewController: UIViewController) -> Bool {
-        
-        if(viewController.title == "Post") {
-            tabBarController.present(viewController, animated: true) {
-                UIView.animate(withDuration: 5, animations: {
-                })
-            }
-        }
-        
-        return true
-    }
+//    func tabBarController(_ tabBarController: UITabBarController, shouldSelect viewController: UIViewController) -> Bool {
+//        
+//        if(viewController.title == "Post") {
+//            tabBarController.present(viewController, animated: true) {
+//                UIView.animate(withDuration: 5, animations: {
+//                })
+//            }
+//        }
+//        
+//        return true
+//    }
 
 
 }
