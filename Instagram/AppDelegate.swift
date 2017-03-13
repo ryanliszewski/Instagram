@@ -66,7 +66,7 @@ class AppDelegate: UIResponder, UIApplicationDelegate, UITabBarControllerDelegat
         
         postViewController.tabBarItem.title = "Post"
         
-        profileViewController.tabBarItem.title = "profile"
+        profileViewController.tabBarItem.title = "Profile"
         
         //profileViewController.ta
         

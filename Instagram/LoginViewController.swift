@@ -41,6 +41,8 @@ class LoginViewController: UIViewController {
         
 
         
+
+        
         newUser.signUpInBackground { (success: Bool, error: Error?) in
             
             if(success) {

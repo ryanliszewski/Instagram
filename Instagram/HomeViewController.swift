@@ -23,6 +23,7 @@ class HomeViewController: UIViewController, UITableViewDelegate, UITableViewData
         postTableView.delegate = self
         postTableView.dataSource = self
         
+        
         MBProgressHUD.showAdded(to: self.view, animated: true)
         
         getPosts()
@@ -33,6 +34,8 @@ class HomeViewController: UIViewController, UITableViewDelegate, UITableViewData
 
 
     }
+    
+    
 
     override func didReceiveMemoryWarning() {
         super.didReceiveMemoryWarning()
@@ -80,6 +83,9 @@ class HomeViewController: UIViewController, UITableViewDelegate, UITableViewData
         
         return cell
     }
+    
+ 
+
     /*
     // MARK: - Navigation
 

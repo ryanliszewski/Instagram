@@ -17,17 +17,14 @@ class PostViewController: UIViewController,UIImagePickerControllerDelegate, UINa
     
     var editedImage: UIImage!
     
+    var vc = UIImagePickerController()
+    
     override func viewDidLoad() {
         super.viewDidLoad()
 
         captionTextField.delegate = self
-        let vc = UIImagePickerController()
         vc.delegate = self
         vc.allowsEditing = true
-        vc.sourceType = UIImagePickerControllerSourceType.camera
-        
-        self.present(vc, animated: true, completion: nil)
-        
         
         // Do any additional setup after loading the view.
     }
@@ -53,6 +50,17 @@ class PostViewController: UIViewController,UIImagePickerControllerDelegate, UINa
         dismiss(animated: true, completion: nil)
     }
     
+
+    @IBAction func onUploadPictureTapped(_ sender: Any) {
+        vc.sourceType = UIImagePickerControllerSourceType.photoLibrary
+        self.present(vc, animated: true, completion: nil)
+    }
+ 
+    @IBAction func onTakePictureTapped(_ sender: Any) {
+        
+        vc.sourceType = UIImagePickerControllerSourceType.camera
+        self.present(vc, animated: true, completion: nil)
+    }
     
     @IBAction func onPostButtonTapped(_ sender: Any) {
         MBProgressHUD.showAdded(to: self.view, animated: true)
@@ -62,7 +70,8 @@ class PostViewController: UIViewController,UIImagePickerControllerDelegate, UINa
             if(success){
                 print("posted a picture")
                 MBProgressHUD.hide(for: self.view, animated: true)
-                
+                //let homeViewController = HomeViewController()
+                //self.present(homeViewController, animated: true, completion: nil)
             }else {
                 print(error?.localizedDescription)
             }
