@@ -27,19 +27,19 @@ class AppDelegate: UIResponder, UIApplicationDelegate, UITabBarControllerDelegat
             })
         )
         
-        //User login persistence
+        //If user is already logged in, intiliaze Tab Bar controller
         if(PFUser.current() != nil){
-            self.window = UIWindow(frame: UIScreen.main.bounds)
-            setUpTabBar()
+            let tabBarController = storyboard.instantiateViewController(withIdentifier: "TabBarController") as! UITabBarController
+            self.window?.rootViewController = tabBarController
         } else {
             let viewController = self.storyboard.instantiateInitialViewController()
             self.window?.rootViewController = viewController
-            self.window?.makeKeyAndVisible()
+            
         }
+        self.window?.makeKeyAndVisible()
         
         //Logout Closure
         NotificationCenter.default.addObserver(forName: NSNotification.Name(rawValue:"User did Logout"), object: nil, queue: OperationQueue.main) { (Notification) in
-            
             let viewController = self.storyboard.instantiateInitialViewController()
             self.window?.rootViewController = viewController
             self.window?.makeKeyAndVisible()
@@ -49,35 +49,6 @@ class AppDelegate: UIResponder, UIApplicationDelegate, UITabBarControllerDelegat
         return true
     }
     
-    func setUpTabBar(){
-        let homeViewController = storyboard.instantiateViewController(withIdentifier: "HomeViewController") as! UINavigationController
-        
-                
-        let postViewController = storyboard.instantiateViewController(withIdentifier: "PostViewController")
-            as! UINavigationController
-        
-        
-        let profileViewController = storyboard.instantiateViewController(withIdentifier: "ProfileViewController") as! UINavigationController
-        
-        
-        postViewController.modalPresentationStyle = UIModalPresentationStyle.overCurrentContext
-        
-        homeViewController.tabBarItem.title = "Home"
-        
-        postViewController.tabBarItem.title = "Post"
-        
-        profileViewController.tabBarItem.title = "Profile"
-        
-        //profileViewController.ta
-        
-        
-        let tabBarController = UITabBarController()
-        
-        tabBarController.viewControllers = [homeViewController, postViewController, profileViewController]
-        self.window?.rootViewController = tabBarController
-        self.window?.makeKeyAndVisible()
-        
-    }
 
     func applicationWillResignActive(_ application: UIApplication) {
         // Sent when the application is about to move from active to inactive state. This can occur for certain types of temporary interruptions (such as an incoming phone call or SMS message) or when the user quits the application and it begins the transition to the background state.

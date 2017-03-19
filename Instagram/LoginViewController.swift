@@ -29,7 +29,16 @@ class LoginViewController: UIViewController {
         PFUser.logInWithUsername(inBackground: usernameField.text!, password: passwordField.text!) { (user: PFUser?,error: Error?) in
             if(user != nil){
                 print("You're logged in")
-                self.performSegue(withIdentifier: "LoginSegue", sender: nil)
+                
+                let storyBoard = UIStoryboard(name: "Main", bundle: nil)
+                
+                
+                let tabBarController = storyBoard.instantiateViewController(withIdentifier: "TabBarController") as! UITabBarController
+                
+                self.present(tabBarController, animated: true, completion: nil)
+                
+                
+                //self.performSegue(withIdentifier: "LoginSegue", sender: nil)
             }
         }
     }

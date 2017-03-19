@@ -12,6 +12,15 @@ import Parse
 
 class Post: NSObject {
     
+    var image: PFFile!
+    
+    
+    init (post: PFObject){
+        
+        
+        
+    }
+    
     
     class func postUserImage(image: UIImage?, withCaption caption: String?, withCompletion completion: PFBooleanResultBlock?) {
         let post = PFObject(className: "Post")

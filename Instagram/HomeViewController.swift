@@ -30,12 +30,6 @@ class HomeViewController: UIViewController, UITableViewDelegate, UITableViewData
         // Do any additional setup after loading the view.
     }
     
-    override  func viewDidAppear(_ animated: Bool){
-
-
-    }
-    
-    
 
     override func didReceiveMemoryWarning() {
         super.didReceiveMemoryWarning()
@@ -67,22 +61,79 @@ class HomeViewController: UIViewController, UITableViewDelegate, UITableViewData
         NotificationCenter.default.post(name: NSNotification.Name(rawValue: "User did Logout"), object: nil)
     }
     
+    
+    
+    /**
+        
+        Tableview
+     
+    */
+    
     func tableView(_ tableView: UITableView, numberOfRowsInSection section: Int) -> Int{
-        if (posts != nil) {
-            return posts.count
-        }else {
-            return 0
-        }
+        return 1
+    }
+    
+    public func numberOfSections(in tableView: UITableView) -> Int {
+        return posts.count
     }
 
     func tableView(_ tableView: UITableView, cellForRowAt indexPath: IndexPath) -> UITableViewCell {
         let cell = tableView.dequeueReusableCell(withIdentifier: "PostCell") as! PostTableViewCell
         
         print(posts.count)
-        cell.post = posts[(posts.count - 1) - indexPath.row]
+        cell.post = posts[(posts.count - 1) - indexPath.section]
         
         return cell
     }
+    
+    /**
+     
+        Table View -> Header View
+ 
+    */
+    
+    func tableView(_ tableView: UITableView, viewForHeaderInSection section: Int) -> UIView? {
+        
+        
+        let headerView = UIView(frame: CGRect(x: 0, y: 0, width: self.view.frame.size.width, height: 40))
+        
+        let profileView = UIView(frame: CGRect(x: 10, y: 10, width: 30, height: 30))
+        
+        let usenameLabel = UILabel(frame: CGRect(x: 60, y: 10, width: 100, height: 20)
+            
+        
+        
+        
+        
+        
+        
+        return tableView.tableHeaderView
+    }
+    
+    //Size of TableVIew header view
+    func tableView(_ tableView: UITableView, heightForHeaderInSection section: Int) -> CGFloat {
+        return 40.0
+    }
+    
+    /**
+     
+        Table View -> FooterView
+ 
+    */
+    
+    
+    func tableView(_ tableView: UITableView, viewForFooterInSection section: Int) -> UIView? {
+        return tableView.tableFooterView
+    }
+    
+    
+    func tableView(_ tableView: UITableView, heightForFooterInSection section: Int) -> CGFloat{
+        return 100
+    }
+    
+    
+    
+    
     
  
 
